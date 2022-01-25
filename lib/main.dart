@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 const blue = Color(0xFF1A529F);
 const yellow = Color(0xFFE7AA4B);
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -244,44 +245,52 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController recipeSearchString = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: blue,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: Container(
-                  height: 400,
-                  width: 200,
-                  padding: const EdgeInsets.all(20),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    "Bro it worked",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 25),
-                  )),
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: true,
+            pinned: true,
+            centerTitle: true,
+            snap: false,
+            actionsIconTheme: const IconThemeData(opacity: 0.0),
+            title: const Text('Your Recipes', style: TextStyle( color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),),
+            backgroundColor: Colors.white,
+            bottom: AppBar(
+              shadowColor: Colors.white,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              title: Container(
+                padding: const EdgeInsets.only(top: 15),
+                width: 530,
+                height: 55,
+                color: Colors.white,
+                child: Center(
+                  child: TextFormField(
+                    controller: recipeSearchString,
+                    textAlignVertical: TextAlignVertical.bottom,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(width: 0, style: BorderStyle.none),
+                        borderRadius: BorderRadius.circular(25.0)
+                      ),
+                      hintText: 'Search',
+                      hintStyle: const TextStyle(fontSize: 18, color: Color(0xFFBDBDBD)),
+                      prefixIcon: const Icon(Icons.search),
+                      filled: true,
+                      fillColor: const Color(0xFFF6F6F6)
+                    ),
+                  ),
+                ),
+              ),
             ),
-            Container(
-              height: 100,
-              width: 570,
-              padding: const EdgeInsets.all(20),
-              child: RaisedButton(
-                  color: yellow,
-                  child: const Text("Logout", style: TextStyle(color: Colors.white)),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MyApp()),
-                          (Route<dynamic> route) => false,
-                    );
-                  }),
-            )
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 }
