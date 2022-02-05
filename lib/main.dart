@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:convert';
 
 const blue = Color(0xFF1A529F);
 const yellow = Color(0xFFE7AA4B);
@@ -244,6 +245,30 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+class recipeListing extends _HomePageState {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        color: Colors.grey,
+        child: const Text(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elementum dolor eget lorem euismod rutrum.',
+          style: TextStyle(fontSize: 30),
+        ),
+      ),
+    );
+  }
+}
+
+void arr() {
+  var arr = ['a','b','c','d','e'];
+}
+
+final recipeList = ['a','b','c'];
+final recipeMap = recipeList.asMap();
+
+
 class _HomePageState extends State<HomePage> {
   TextEditingController recipeSearchString = TextEditingController();
   @override
@@ -253,6 +278,7 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            elevation: 0,
             floating: true,
             pinned: true,
             centerTitle: true,
@@ -288,9 +314,28 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-          )
-        ],
-      ),
-    );
+          ),
+        SliverFixedExtentList(
+          itemExtent: 100,
+            delegate: SliverChildBuilderDelegate(
+                (context, index){
+                  return Card(
+                    margin: const EdgeInsets.all(10),
+                    child: Container(
+                      color: Colors.white,
+                      height: 90,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Recipe $index'
+                      ),
+                    ),
+                  );
+                },
+                childCount: 10
+              )
+            )
+          ],
+        ),
+      );
+    }
   }
-}
