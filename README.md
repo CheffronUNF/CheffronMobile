@@ -2,7 +2,7 @@
 
 Cheffron Meals Mobile Meals App (Software Engineering Project) (IN DEVELOPMENT)
 
-#Contributers
+# Contributers
 
 David Custodio (Front End Developer, UI Designer, UX Designer)
 Afsara Chowdury (Project Manager, Front End Developer)
