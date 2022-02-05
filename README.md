@@ -4,12 +4,12 @@ Cheffron Meals Mobile Meals App (Software Engineering Project) (IN DEVELOPMENT)
 
 # Contributers
 
--David Custodio (Front End Developer, UI Designer, UX Designer)
--Afsara Chowdury (Project Manager, Front End Developer)
--Stephanie El-Bahri (API Integration Specialist, Compatability Tester)
--Hailey Francis (Database Designer)
--Elian Khalaf (Backend Developer, Database Engineer, Database Administrator)
--Chase Wesley (Backend Developer)
+- David Custodio (Front End Developer, UI Designer, UX Designer)
+- Afsara Chowdury (Project Manager, Front End Developer)
+- Stephanie El-Bahri (API Integration Specialist, Compatability Tester)
+- Hailey Francis (Database Designer)
+- Elian Khalaf (Backend Developer, Database Engineer, Database Administrator)
+- Chase Wesley (Backend Developer)
 
 ## About Cheffron Mobile
 
