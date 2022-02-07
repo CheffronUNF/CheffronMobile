@@ -330,7 +330,7 @@ class _HomePageState extends State<HomePage> {
                       height: 90,
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Recipe: $index', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        'Recipe $index', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
                   );
