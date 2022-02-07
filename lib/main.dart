@@ -287,13 +287,14 @@ class _HomePageState extends State<HomePage> {
             title: const Text('Your Recipes', style: TextStyle( color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),),
             backgroundColor: Colors.white,
             bottom: AppBar(
+              toolbarHeight: 80,
               shadowColor: Colors.white,
               backgroundColor: Colors.white,
               elevation: 0,
               title: Container(
                 padding: const EdgeInsets.only(top: 15),
                 width: 530,
-                height: 55,
+                height: 65,
                 color: Colors.white,
                 child: Center(
                   child: TextFormField(
@@ -315,6 +316,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+       SliverPadding(
+            padding: const EdgeInsets.only(top: 30.0),
+            sliver:
         SliverFixedExtentList(
           itemExtent: 100,
             delegate: SliverChildBuilderDelegate(
@@ -324,9 +328,9 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                       color: Colors.white,
                       height: 90,
-                      alignment: Alignment.center,
+                      alignment: Alignment.topLeft,
                       child: Text(
-                        'Recipe $index'
+                        'Recipe $index', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
                   );
@@ -334,6 +338,7 @@ class _HomePageState extends State<HomePage> {
                 childCount: 10
               )
             )
+            ),
           ],
         ),
       );
