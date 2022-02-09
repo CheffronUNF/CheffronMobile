@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
+
 const blue = Color(0xFF1A529F);
 const yellow = Color(0xFFE7AA4B);
 
@@ -245,16 +246,30 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class recipeListing extends _HomePageState {
+class recipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(1),
       child: Container(
-        color: Colors.grey,
         child: const Text(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elementum dolor eget lorem euismod rutrum.',
-          style: TextStyle(fontSize: 30),
+          'the recipe class',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
+
+class description extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1),
+      child: Container(
+        child: const Text(
+          'description class',
+          style: TextStyle(fontSize: 14,),
         ),
       ),
     );
@@ -329,8 +344,11 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                       height: 90,
                       alignment: Alignment.topLeft,
-                      child: Text(
-                        'Recipe $index', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      child: Column(
+                        children: [
+                          recipe(),
+                          description()
+                        ],
                       ),
                     ),
                   );
