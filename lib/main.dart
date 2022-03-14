@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:convert';
+
+
+import 'Screens/Home Page.dart';
+import 'Screens/Pantry Page.dart';
 
 const blue = Color(0xFF1A529F);
 const yellow = Color(0xFFE7AA4B);
@@ -19,15 +22,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cheffron',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
@@ -239,103 +233,3 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 }
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class recipeListing extends _HomePageState {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Container(
-        color: Colors.grey,
-        child: const Text(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elementum dolor eget lorem euismod rutrum.',
-          style: TextStyle(fontSize: 30),
-        ),
-      ),
-    );
-  }
-}
-
-void arr() {
-  var arr = ['a','b','c','d','e'];
-}
-
-final recipeList = ['a','b','c'];
-final recipeMap = recipeList.asMap();
-
-
-class _HomePageState extends State<HomePage> {
-  TextEditingController recipeSearchString = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            elevation: 0,
-            floating: true,
-            pinned: true,
-            centerTitle: true,
-            snap: false,
-            actionsIconTheme: const IconThemeData(opacity: 0.0),
-            title: const Text('Your Recipes', style: TextStyle( color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),),
-            backgroundColor: Colors.white,
-            bottom: AppBar(
-              shadowColor: Colors.white,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              title: Container(
-                padding: const EdgeInsets.only(top: 15),
-                width: 530,
-                height: 55,
-                color: Colors.white,
-                child: Center(
-                  child: TextFormField(
-                    controller: recipeSearchString,
-                    textAlignVertical: TextAlignVertical.bottom,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-                        borderRadius: BorderRadius.circular(25.0)
-                      ),
-                      hintText: 'Search',
-                      hintStyle: const TextStyle(fontSize: 18, color: Color(0xFFBDBDBD)),
-                      prefixIcon: const Icon(Icons.search),
-                      filled: true,
-                      fillColor: const Color(0xFFF6F6F6)
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        SliverFixedExtentList(
-          itemExtent: 100,
-            delegate: SliverChildBuilderDelegate(
-                (context, index){
-                  return Card(
-                    margin: const EdgeInsets.all(10),
-                    child: Container(
-                      color: Colors.white,
-                      height: 90,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Recipe $index'
-                      ),
-                    ),
-                  );
-                },
-                childCount: 10
-              )
-            )
-          ],
-        ),
-      );
-    }
-  }
