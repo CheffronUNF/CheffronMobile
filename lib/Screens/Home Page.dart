@@ -1,6 +1,8 @@
+import 'package:cheffron_mobile/Screens/Pantry%20Page.dart';
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -115,6 +117,10 @@ class _HomePageState extends State<HomePage> {
                   child: const Text('PANTRY', style: TextStyle(fontSize: 18),),
                   onPressed: (){
                     print ('pantry pressed');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PantryPage()),
+                    );
                   },
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
               )
