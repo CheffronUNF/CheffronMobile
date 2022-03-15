@@ -1,4 +1,6 @@
+import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -74,15 +76,49 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        //TODO: match with figma design
-        //currentIndex: 0,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.settings), title: Text('Settings')),
-          BottomNavigationBarItem(icon: Icon(Icons.inventory), title: Text('Pantry')),
-          BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('Add recipe'))
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: [
+          Positioned(
+              height: 70,
+              width: 70,
+              right: 30,
+              bottom: 15,
+              child: FloatingActionButton(
+                backgroundColor: yellow,
+                child: const Icon(Icons.add, size: 50,),
+                onPressed: (){
+                  print ('add pressed');
+                }
+              )
+          ),
+          Positioned(
+              height: 70,
+              width: 70,
+              left: 30,
+              bottom: 15,
+              child: FloatingActionButton(
+                  backgroundColor: yellow,
+                  child: const Icon(Icons.settings, size: 40,),
+                  onPressed: (){
+                    print ('settings pressed');
+                  },
+              )
+          ),
+          Positioned(
+            width: 130,
+            bottom: 20,
+              child: FloatingActionButton(
+                  backgroundColor: yellow,
+                  child: const Text('PANTRY', style: TextStyle(fontSize: 18),),
+                  onPressed: (){
+                    print ('pantry pressed');
+                  },
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
+              )
+          )
         ],
       ),
     );
