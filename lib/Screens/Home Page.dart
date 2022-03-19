@@ -89,6 +89,7 @@ class _HomePageState extends State<HomePage> {
               right: 30,
               bottom: 15,
               child: FloatingActionButton(
+                heroTag: "Add button",
                 backgroundColor: yellow,
                 child: const Icon(Icons.add, size: 50,),
                 onPressed: (){
@@ -102,6 +103,7 @@ class _HomePageState extends State<HomePage> {
               left: 30,
               bottom: 15,
               child: FloatingActionButton(
+                heroTag: "Settings button",
                   backgroundColor: yellow,
                   child: const Icon(Icons.settings, size: 40,),
                   onPressed: (){
@@ -113,6 +115,7 @@ class _HomePageState extends State<HomePage> {
             width: 130,
             bottom: 20,
               child: FloatingActionButton(
+                heroTag: "Pantry buttton",
                   backgroundColor: yellow,
                   child: const Text('PANTRY', style: TextStyle(fontSize: 18),),
                   onPressed: (){

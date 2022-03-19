@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-
-
 import 'Screens/Home Page.dart';
-import 'Screens/Pantry Page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const blue = Color(0xFF1A529F);
 const yellow = Color(0xFFE7AA4B);
 
 
 void main() {
+  //final SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 

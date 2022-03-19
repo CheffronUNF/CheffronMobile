@@ -1,111 +1,139 @@
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
-
+import '../IngredientListing.dart';
+import '../SharedPreference.dart';
+import 'dart:convert';
 //TODO: pantry doesn't save when exiting
 //TODO: option to delete an ingredient
 
 class PantryPage extends StatefulWidget {
+  const PantryPage({Key? key}) : super(key: key);
+
   @override
   _PantryPageState createState() => _PantryPageState();
 }
 
-class IngredientListing {
-  String name;
-  int quantity;
-  String unit;
+SharedPref sharedPref = SharedPref();
 
-  IngredientListing(
-      this.name,
-      this.quantity,
-      this.unit
-  );
-}
 
 class _PantryPageState extends State<PantryPage> {
   List<IngredientListing> ingredientsList = [];
-  @override
-  Widget build(BuildContext context) {
-    //function to add an ingredient
-    void addIngredient(IngredientListing ingredientListing) {
 
-      setState(() {
-        ingredientsList.add(ingredientListing);
-      });
+  loadSharedPrefs() async {
+    try {
+      var ingredientsListStart = await sharedPref.read('ingredient');
+      ingredientsList.add(IngredientListing.fromJson(ingredientsListStart));
+      print('loaded');
+    } catch (Excepetion) {
+      var ingredientsListStart = await sharedPref.read('list');
+      print('loading failed');
+      print(ingredientsListStart);
     }
-    //function to show a dialog allowing user to input ingredients
-    void showUserDialog() {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            content: AddUserDialog(addIngredient),
-          );
-        },
-      );
-    }
+  }
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        actionsIconTheme: const IconThemeData(color: Colors.black),
-        leading: const BackButton(
-          color: Color(0xFFBDBDBD),
-        ),
-        title: const Text('Pantry', style: TextStyle( color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),),
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: ListView.builder(
-          itemBuilder: (ctx, index) {
-            return Card(
-              margin: EdgeInsets.all(4),
-              elevation: 8,
-              child: ListTile(
-                title: Text(
-                  ingredientsList[index].name,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                trailing: Text(
-                  ingredientsList[index].quantity.toString() + "" + ingredientsList[index].unit,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFFBDBDBD),
-                  ),
-                ),
+
+    @override
+    Widget build(BuildContext context) {
+
+
+      //function to add an ingredient
+      void addIngredient(IngredientListing ingredientListing) {
+        setState(() {
+          ingredientsList.add(ingredientListing);
+          sharedPref.save('list', ingredientsList);
+        });
+      }
+      //function to show a dialog allowing user to input ingredients
+      void showUserDialog() {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
+              content: AddIngredientDialog.addIngredientDialog(addIngredient),
             );
           },
-          itemCount: ingredientsList.length,
+        );
+      }
+
+      return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          actionsIconTheme: const IconThemeData(color: Colors.black),
+          actions:  [
+            TextButton(
+                onPressed: () {
+                  //sharedPref.clear();
+                  setState(() {
+
+                  });
+                },
+                child: Text("Clear All", style: TextStyle(color: yellow),))
+          ],
+          leading: const BackButton(
+            color: Color(0xFFBDBDBD),
+          ),
+          title: const Text('Pantry', style: TextStyle(
+              color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: yellow,
-          child: const Icon(Icons.add, size: 50,),
-          onPressed: showUserDialog
-      ),
-    );
+        body: Container(
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
+          child: ListView.builder(
+            itemBuilder: (ctx, index) {
+              return Card(
+                margin: EdgeInsets.all(4),
+                elevation: 8,
+                child: ListTile(
+                  title: Text(
+                    ingredientsList[index].name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: Text(
+                    ingredientsList[index].quantity.toString() + "" +
+                        ingredientsList[index].unit,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFFBDBDBD),
+                    ),
+                    ),
+                  ),
+                );
+            },
+            itemCount: ingredientsList.length,
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+            backgroundColor: yellow,
+            child: const Icon(Icons.add, size: 50,),
+            onPressed: showUserDialog,
+            heroTag: "Add ingredient",
+        ),
+      );
+    }
   }
-  }
+
 //user dialog class
-class AddUserDialog extends StatefulWidget {
-  final Function(IngredientListing) addUser;
-  AddUserDialog(this.addUser);
+class AddIngredientDialog extends StatefulWidget {
+  final Function(IngredientListing) addIngredient;
+  const AddIngredientDialog.addIngredientDialog(this.addIngredient);
 
   @override
-  _AddUserDialogState createState() => _AddUserDialogState();
+  _AddIngredientDialogState createState() => _AddIngredientDialogState();
 }
 
-class _AddUserDialogState extends State<AddUserDialog> {
+class _AddIngredientDialogState extends State<AddIngredientDialog> {
   @override
   Widget build(BuildContext context) {
 
@@ -149,7 +177,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
               ),
               onPressed: () {
                 final ingredient = IngredientListing(ingredientName.text, int.parse(ingredientQuantity.text), ingredientUnit.text);
-                widget.addUser(ingredient);
+                widget.addIngredient(ingredient);
                 Navigator.of(context).pop();
               },
               child: Text('Add Ingredient'),
