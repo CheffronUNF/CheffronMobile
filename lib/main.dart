@@ -1,11 +1,59 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'Screens/Home Page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 const blue = Color(0xFF1A529F);
 const yellow = Color(0xFFE7AA4B);
 
+Future<Account> createAccount(String username) async {
+  final response = await http.post(
+    Uri.parse('https://cheffron.elian.tk/user'),
+    headers: <String, String>{
+      "jwt":"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI5OWQxZTMwYy00ZDhiLTRiYmItOTY0NS05"
+          "MjdlYjI3NzgwYzIiLCJ1c2VybmFtZSI6ImVsaWFuIiwiaWF0IjoxNjQ3NzEwNjkzfQ.Z"
+          "P_dfWl7ZPCP7r72KmgGffb11MxWlaLxc3Ld8cVAnxqEHmtf1pHbEsloL7HmJ-yGlQVE"
+          "DOKa6Ig4W8f2XSHG5AijeRMVO8w2X08xyIrVhbdAvSaXyCJqfjaudllWdvoMMVFNXxT"
+          "rFJU121YqrgRsbMKHfl7XfQFu60aYlOq7rsyDQUA76hE6H_PsNAr_Fy-DG4ePz95plt"
+          "hWujT3VVkb2RNuZCsr6RE8H3jxA9xMkqxxmvYDUqmwPpnTwLCRIy8sW9-e-sM9SUnsY"
+          "iUrKB_9PZroduHUH4H_EBaK_qyg5OTEqZu6fqL7pSXMaag1gR82YcUM0qksu_5AEpSL"
+          "rrBQ9w",
+    },
+    body: jsonEncode(<String, String>{
+      "username": "elian", "name": "Elian", "email": "elian1203@gmail.com",
+      "password": "cGFzc3dvcmQ="
+    }),
+  );
+
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Account.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create account.');
+  }
+}
+
+class Account {
+  final int id;
+  final String username;
+  final String password;
+
+  const Account({required this.id, required this.username, required this.password});
+
+  factory Account.fromJson(Map<String, dynamic> json) {
+    return Account(
+      id: json['id'],
+      username: json['username'],
+      password: json['password'],
+    );
+  }
+}
 
 void main() {
   //final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -14,6 +62,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+  //Future<Account>? _futureAccount;
 
   // This widget is the root of your application.
   @override
@@ -42,6 +91,23 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+/*FutureBuilder<Account> buildFutureBuilder() {
+  return FutureBuilder<Account>(
+    future: _futureAccount,
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return Text(snapshot.data!.username);
+      } else if (snapshot.hasError) {
+        return Text('${snapshot.error}');
+      }
+
+      return const CircularProgressIndicator();
+    },
+  );
+}
+}*/
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
