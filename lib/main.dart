@@ -295,6 +295,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: const RaisedButton(
                 onPressed: null,
                 child: Text("Don't have an account? Sign up!",
+                  //TODO: connect to sign up page
                   style: TextStyle(color: yellow),),
                 disabledColor: blue, //only needed because the button does nothing for now
               ),
@@ -404,7 +405,7 @@ class SignUpScreenState extends State<SignUpScreen> {
             ),
 
 
-// Lastname input
+           // Lastname input
             Container(
               height: 60,
               width: 530,
@@ -436,7 +437,7 @@ class SignUpScreenState extends State<SignUpScreen> {
             ),
 
 
-// Email input
+       //Email input
             Container(
               height: 60,
               width: 530,
