@@ -1,4 +1,5 @@
 import 'package:cheffron_mobile/Screens/Pantry%20Page.dart';
+import 'package:cheffron_mobile/Screens/Recipe%20Page.dart';
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,14 +64,22 @@ class _HomePageState extends State<HomePage> {
                       (context, index){
                     return Card(
                       margin: const EdgeInsets.all(10),
-                      child: Container(
-                        color: Colors.white,
-                        height: 90,
-                        alignment: Alignment.center,
-                        child: Text(
+                      child: InkWell(
+                        child: Container(
+                          color: Colors.white,
+                          height: 90,
+                          alignment: Alignment.center,
+                          child: Text(
                             'Recipe $index'
                         ),
                       ),
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => RecipePage()),
+                          );
+                        },
+                      )
                     );
                   },
                   childCount: 10

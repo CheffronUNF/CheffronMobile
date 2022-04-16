@@ -173,7 +173,7 @@ class _AddIngredientDialogState extends State<AddIngredientDialog> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: yellow,
+                primary: yellow, 
               ),
               onPressed: () {
                 final ingredient = IngredientListing(ingredientName.text, int.parse(ingredientQuantity.text), ingredientUnit.text);
