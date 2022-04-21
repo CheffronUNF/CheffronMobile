@@ -1,3 +1,4 @@
+import 'package:cheffron_mobile/Screens/Add%20Recipe%20Page.dart';
 import 'package:cheffron_mobile/Screens/Pantry%20Page.dart';
 import 'package:cheffron_mobile/Screens/Recipe%20Page.dart';
 import 'package:cheffron_mobile/main.dart';
@@ -103,6 +104,10 @@ class _HomePageState extends State<HomePage> {
                 child: const Icon(Icons.add, size: 50,),
                 onPressed: (){
                   print ('add pressed');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddRecipe()),
+                  );
                 }
               )
           ),
