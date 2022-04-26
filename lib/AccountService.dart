@@ -4,30 +4,22 @@ import 'main.dart';
 
 //create Account
 Future<String> createAccount(String username, String firstName, String lastName, String email, String password) async {
-  final bytes = utf8.encode(password);
-  final base64Str = base64.encode(bytes);
   final response = await http.post(
     Uri.parse('https://elian.tk:8808/user'),
     body: jsonEncode(<String, String>{
       "username": username, "first name": firstName, "last name": lastName, "email": email,
-      "password": base64Str
+      "password": password
     }),
   );
 
-  if (response.statusCode == 200) {
-    String jwt = response.headers["jwt"]!;
-    preferences.save("jwt", jwt);
-    return "success";
-  } else {
-    dynamic jsonDecoded = jsonDecode(response.body);
-    String error = jsonDecoded["error"];
-    if (error == "Username already exists"){
-      return "user";
-    }
-    else if (error == "Email already exists"){
-      return "email";
-    }
+  switch (response.statusCode)
+  {
+    case 200:
+      return "success";
+    case 401:
+      return "fail";
+    default:
+      return "malformed";
   }
-  return "";
 }
 
