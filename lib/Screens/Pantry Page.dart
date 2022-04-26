@@ -1,6 +1,6 @@
+import 'package:cheffron_mobile/Model/Ingredient.dart';
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
-import '../IngredientListing.dart';
 import '../SharedPreference.dart';
 import 'dart:convert';
 //TODO: pantry doesn't save when exiting
@@ -17,12 +17,12 @@ SharedPref sharedPref = SharedPref();
 
 
 class _PantryPageState extends State<PantryPage> {
-  List<IngredientListing> ingredientsList = [];
+  List<Ingredient> ingredientsList = [];
 
   loadSharedPrefs() async {
     try {
       var ingredientsListStart = await sharedPref.read('ingredient');
-      ingredientsList.add(IngredientListing.fromJson(ingredientsListStart));
+      ingredientsList.add(Ingredient.fromJson(ingredientsListStart));
       print('loaded');
     } catch (Excepetion) {
       var ingredientsListStart = await sharedPref.read('list');
@@ -37,7 +37,7 @@ class _PantryPageState extends State<PantryPage> {
 
 
       //function to add an ingredient
-      void addIngredient(IngredientListing ingredientListing) {
+      void addIngredient(Ingredient ingredientListing) {
         setState(() {
           ingredientsList.add(ingredientListing);
           sharedPref.save('list', ingredientsList);
@@ -126,7 +126,7 @@ class _PantryPageState extends State<PantryPage> {
 
 //user dialog class
 class AddIngredientDialog extends StatefulWidget {
-  final Function(IngredientListing) addIngredient;
+  final Function(Ingredient) addIngredient;
   const AddIngredientDialog.addIngredientDialog(this.addIngredient);
 
   @override
@@ -176,7 +176,7 @@ class _AddIngredientDialogState extends State<AddIngredientDialog> {
                 primary: yellow, 
               ),
               onPressed: () {
-                final ingredient = IngredientListing(ingredientName.text, int.parse(ingredientQuantity.text), ingredientUnit.text);
+                final ingredient = Ingredient(ingredientName.text, int.parse(ingredientQuantity.text), ingredientUnit.text);
                 widget.addIngredient(ingredient);
                 Navigator.of(context).pop();
               },

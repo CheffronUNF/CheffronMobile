@@ -1,15 +1,15 @@
-class IngredientListing {
+class Ingredient {
   late String name;
   late int quantity;
   late String unit;
 
-  IngredientListing(
+  Ingredient(
       this.name,
       this.quantity,
       this.unit
       );
 
-  IngredientListing.fromJson(Map<String, dynamic> json):
+  Ingredient.fromJson(Map<String, dynamic> json):
         name = json['name'],
         quantity = json['quantity'],
         unit = json['unit'];
