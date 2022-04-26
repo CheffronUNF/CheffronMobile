@@ -288,7 +288,20 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
+FutureBuilder<String> buildFutureBuilder(String username, String firstName, String lastName, String email, String password) {
+  return FutureBuilder<String>(
+    future: createAccount("username", "name", "email", "password"),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return Text(snapshot.data!);
+      } else if (snapshot.hasError) {
+        return Text('${snapshot.error}');
+      }
 
+      return const CircularProgressIndicator();
+    },
+  );
+}
 
 // Created SighUpPage
 
@@ -548,6 +561,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                           MaterialPageRoute(builder: (context) => HomePage()),
                               (Route<dynamic> route) => false,
                         );
+                        var _futureAccount = buildFutureBuilder(firstnameController.text, lastnameController.text, emailController.text, usernameController.text, passwordController.text);
                       } else {
                         setState(() {
                           _isVisible = true;
