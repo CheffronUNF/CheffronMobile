@@ -1,9 +1,10 @@
+import 'package:cheffron_mobile/Style.dart';
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Model/Ingredient.dart';
-import 'Pantry Page.dart';
+import 'PantryPage.dart';
 //TODO: Fix keyboard issue
 class AddRecipe extends StatefulWidget{
   const AddRecipe({Key ? key}) : super(key: key);

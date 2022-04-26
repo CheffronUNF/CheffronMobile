@@ -1,6 +1,7 @@
-import 'package:cheffron_mobile/Screens/Add%20Recipe%20Page.dart';
-import 'package:cheffron_mobile/Screens/Pantry%20Page.dart';
-import 'package:cheffron_mobile/Screens/Recipe%20Page.dart';
+import 'package:cheffron_mobile/Screens/AddRecipePage.dart';
+import 'package:cheffron_mobile/Screens/PantryPage.dart';
+import 'package:cheffron_mobile/Screens/RecipePage.dart';
+import 'package:cheffron_mobile/Style.dart';
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
