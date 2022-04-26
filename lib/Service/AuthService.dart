@@ -18,9 +18,12 @@ Future<String> login(String username, String password) async
       String jwt = body["jwt"];
       preferences.save("jwt", jwt);
       return "success";
-    case 401:
-      return "fail";
-    default:
+    case 406:
       return "malformed";
+    default:
+      return "fail";
   }
 }
+
+
+

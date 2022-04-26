@@ -12,7 +12,7 @@ import 'package:cheffron_mobile/Style.dart';
 
 FutureBuilder<String> buildFutureBuilder(User user) {
   return FutureBuilder<String>(
-    future: createAccount(user),
+    future: createUser(user),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Text(snapshot.data!);

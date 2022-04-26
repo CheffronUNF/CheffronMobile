@@ -28,7 +28,7 @@ class _AddRecipeState extends State<AddRecipe>{
       var ingredientsListStart = await sharedPref.read('ingredient');
       ingredientsList.add(IngredientListing.fromJson(ingredientsListStart));
       print('loaded');
-    } catch (Excepetion) {
+    } catch (Exception) {
       var ingredientsListStart = await sharedPref.read('ingredientList');
       print('loading failed');
       print(ingredientsListStart);
