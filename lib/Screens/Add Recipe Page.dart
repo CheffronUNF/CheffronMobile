@@ -1,6 +1,9 @@
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../IngredientListing.dart';
+import 'Pantry Page.dart';
 //TODO: Fix keyboard issue
 class AddRecipe extends StatefulWidget{
   const AddRecipe({Key ? key}) : super(key: key);
@@ -9,6 +12,7 @@ class AddRecipe extends StatefulWidget{
   _AddRecipeState createState() => _AddRecipeState();
 }
 
+
 class _AddRecipeState extends State<AddRecipe>{
   TextEditingController recipeName = TextEditingController();
   TextEditingController serves = TextEditingController();
@@ -16,10 +20,48 @@ class _AddRecipeState extends State<AddRecipe>{
   TextEditingController ingredients = TextEditingController();
   TextEditingController directions = TextEditingController();
 
+  List<IngredientListing> ingredientsList = [];
+  /*
+  loadSharedPrefs() async {
+    try {
+      var ingredientsListStart = await sharedPref.read('ingredient');
+      ingredientsList.add(IngredientListing.fromJson(ingredientsListStart));
+      print('loaded');
+    } catch (Excepetion) {
+      var ingredientsListStart = await sharedPref.read('list');
+      print('loading failed');
+      print(ingredientsListStart);
+    }
+  }
+
+   */
+
   @override
   Widget build(BuildContext context){
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+
+    void addIngredient(IngredientListing ingredientListing) {
+      setState(() {
+        ingredientsList.add(ingredientListing);
+        sharedPref.save('recipeList', ingredientsList);
+      });
+    }
+
+    void showUserDialog() {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            content: AddIngredientDialog.addIngredientDialog(addIngredient),
+          );
+        },
+      );
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: blue,
@@ -54,7 +96,7 @@ class _AddRecipeState extends State<AddRecipe>{
           ),
 
           SizedBox(
-            height: screenHeight * 0.05,
+            height: screenHeight * 0.025,
           ),
 
           Row(
@@ -109,10 +151,7 @@ class _AddRecipeState extends State<AddRecipe>{
             ],
           ),
 
-          SizedBox(
-            height: screenHeight * 0.05,
-          ),
-
+          /*
           Center(
             child: Container(
               height: screenHeight * 0.2,
@@ -139,13 +178,15 @@ class _AddRecipeState extends State<AddRecipe>{
             ),
           ),
 
+           */
+
           SizedBox(
-            height: screenHeight * 0.05,
+            height: screenHeight * 0.03,
           ),
 
           Center(
             child: Container(
-              height: screenHeight * 0.25,
+              height: screenHeight * 0.20,
               width: screenWidth * 0.85,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -167,6 +208,61 @@ class _AddRecipeState extends State<AddRecipe>{
                 ],
               ),
             ),
+          ),
+
+          SizedBox(
+            height: screenHeight * 0.02,
+          ),
+
+          Container(
+            height: screenHeight * 0.04,
+            child: Text("INGREDIENTS", style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 28)),
+          ),
+
+          Container(
+            height: screenHeight * 0.3,
+            width: screenWidth * 0.9,
+            child: ListView.builder(
+              itemBuilder: (ctx, index) {
+                return Card(
+                  margin: EdgeInsets.all(4),
+                  elevation: 8,
+                  child: ListTile(
+                    title: Text(
+                      ingredientsList[index].name,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    trailing: Text(
+                      ingredientsList[index].quantity.toString() + "" +
+                          ingredientsList[index].unit,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Color(0xFFBDBDBD),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              itemCount: ingredientsList.length,
+            ),
+          ),
+
+
+          SizedBox(
+            height: screenHeight * 0.03,
+          ),
+
+          FloatingActionButton.extended(
+            backgroundColor: yellow,
+            //child: const Icon(Icons.add, size: 50,),
+            onPressed: showUserDialog,
+            heroTag: "Add ingredient",
+            label: Text("Add Ingredient"),
+            
           ),
 
         ],
