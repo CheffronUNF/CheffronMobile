@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'Model/User.dart';
 import 'main.dart';
 
 //create Account
-Future<String> createAccount(String username, String firstName, String lastName, String email, String password) async {
+Future<String> createAccount(User user) async {
   final response = await http.post(
     Uri.parse('https://elian.tk:8808/user'),
-    body: jsonEncode(<String, String>{
-      "username": username, "first name": firstName, "last name": lastName, "email": email,
-      "password": password
-    }),
+    body: user.toJson(),
   );
 
   switch (response.statusCode)

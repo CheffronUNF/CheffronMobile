@@ -3,41 +3,15 @@ import 'dart:convert';
 import 'package:cheffron_mobile/SharedPreference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'Model/User.dart';
 import 'Screens/Home Page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'AccountService.dart';
 
 SharedPref preferences = SharedPref();
 const blue = Color(0xFF1A529F);
 const yellow = Color(0xFFE7AA4B);
-
-//create Account
-Future<String> createAccount(String username, String name, String email, String password) async {
-  final bytes = utf8.encode(password);
-  final base64Str = base64.encode(bytes);
-  final response = await http.post(
-    Uri.parse('https://elian.tk:8808/user'),
-    body: jsonEncode(<String, String>{
-      "username": username, "name": name, "email": email,
-      "password": base64Str
-    }),
-  );
-  dynamic jsonDecoded = jsonDecode(response.body);
-  if (response.statusCode == 200) {
-    String jwt = jsonDecoded["jwt"];
-    preferences.save("jwt", jwt);
-    return "success";
-  } else {
-    String error = jsonDecoded["error"];
-    if (error == "Username already exists"){
-      return "user";
-    }
-    else if (error == "Email already exists"){
-      return "email";
-    }
-  }
-  return "";
-}
 
 
 void main() {
@@ -288,9 +262,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-FutureBuilder<String> buildFutureBuilder(String username, String firstName, String lastName, String email, String password) {
+FutureBuilder<String> buildFutureBuilder(User user) {
   return FutureBuilder<String>(
-    future: createAccount("username", "name", "email", "password"),
+    future: createAccount(user),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Text(snapshot.data!);
@@ -561,7 +535,8 @@ class SignUpScreenState extends State<SignUpScreen> {
                           MaterialPageRoute(builder: (context) => HomePage()),
                               (Route<dynamic> route) => false,
                         );
-                        var _futureAccount = buildFutureBuilder(firstnameController.text, lastnameController.text, emailController.text, usernameController.text, passwordController.text);
+                        var user = User(firstnameController.text + " " + lastnameController.text, usernameController.text, emailController.text, passwordController.text);
+                        var _futureAccount = buildFutureBuilder(user);
                       } else {
                         setState(() {
                           _isVisible = true;
