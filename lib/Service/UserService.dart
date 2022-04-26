@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'Model/User.dart';
-import 'main.dart';
+import '../Model/User.dart';
+import '../main.dart';
 
 //create Account
 Future<String> createAccount(User user) async {

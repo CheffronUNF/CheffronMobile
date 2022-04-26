@@ -7,7 +7,7 @@ import 'Model/User.dart';
 import 'Screens/Home Page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'AccountService.dart';
+import 'Service/UserService.dart';
 
 SharedPref preferences = SharedPref();
 const blue = Color(0xFF1A529F);
