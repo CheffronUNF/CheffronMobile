@@ -21,20 +21,22 @@ class _AddRecipeState extends State<AddRecipe>{
   TextEditingController directions = TextEditingController();
 
   List<IngredientListing> ingredientsList = [];
-  /*
+/*
   loadSharedPrefs() async {
     try {
       var ingredientsListStart = await sharedPref.read('ingredient');
       ingredientsList.add(IngredientListing.fromJson(ingredientsListStart));
       print('loaded');
     } catch (Excepetion) {
-      var ingredientsListStart = await sharedPref.read('list');
+      var ingredientsListStart = await sharedPref.read('ingredientList');
       print('loading failed');
       print(ingredientsListStart);
     }
   }
 
-   */
+ */
+
+
 
   @override
   Widget build(BuildContext context){
@@ -216,13 +218,18 @@ class _AddRecipeState extends State<AddRecipe>{
 
           Container(
             height: screenHeight * 0.04,
-            child: Text("INGREDIENTS", style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 28)),
+            child: const Text("INGREDIENTS",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 28)),
           ),
 
           Container(
             height: screenHeight * 0.3,
             width: screenWidth * 0.9,
             child: ListView.builder(
+              padding: EdgeInsets.zero,
               itemBuilder: (ctx, index) {
                 return Card(
                   margin: EdgeInsets.all(4),
@@ -261,7 +268,7 @@ class _AddRecipeState extends State<AddRecipe>{
             //child: const Icon(Icons.add, size: 50,),
             onPressed: showUserDialog,
             heroTag: "Add ingredient",
-            label: Text("Add Ingredient"),
+            label: const Text("Add Ingredient"),
             
           ),
 
