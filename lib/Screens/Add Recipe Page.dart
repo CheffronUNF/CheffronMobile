@@ -2,7 +2,7 @@ import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../IngredientListing.dart';
+import '../Model/Ingredient.dart';
 import 'Pantry Page.dart';
 //TODO: Fix keyboard issue
 class AddRecipe extends StatefulWidget{
@@ -20,7 +20,7 @@ class _AddRecipeState extends State<AddRecipe>{
   TextEditingController ingredients = TextEditingController();
   TextEditingController directions = TextEditingController();
 
-  List<IngredientListing> ingredientsList = [];
+  List<Ingredient> ingredientsList = [];
 /*
   loadSharedPrefs() async {
     try {
@@ -43,7 +43,7 @@ class _AddRecipeState extends State<AddRecipe>{
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    void addIngredient(IngredientListing ingredientListing) {
+    void addIngredient(Ingredient ingredientListing) {
       setState(() {
         ingredientsList.add(ingredientListing);
         sharedPref.save('recipeList', ingredientsList);
