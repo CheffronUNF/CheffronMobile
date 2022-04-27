@@ -13,15 +13,15 @@ Future<String> createUser(User user) async {
   {
     case 200:
       return "success";
-    case 401:
-      return "fail";
-    default:
+    case 406:
       return "malformed";
+    default:
+      return "fail";
   }
 }
 
 Future<User?> getUser(String id) async {
-  final response = await http.get(_url.resolve(id));
+  final response = await http.get(_url.resolve('/$id'));
 
   switch (response.statusCode)
   {
@@ -43,7 +43,7 @@ Future<String> updateUser(String id, User user) async {
   }
 
   var headers = {"jwt":jwt};
-  final response = await http.patch(_url.resolve(id), headers: headers, body: user.toJson());
+  final response = await http.patch(_url.resolve('/$id'), headers: headers, body: user.toJson());
 
   switch (response.statusCode)
   {
@@ -65,7 +65,7 @@ Future<String> deleteUser(String id) async {
   }
 
   var headers = {"jwt":jwt};
-  final response = await http.patch(_url.resolve(id), headers: headers);
+  final response = await http.patch(_url.resolve('/$id'), headers: headers);
 
   switch (response.statusCode)
   {

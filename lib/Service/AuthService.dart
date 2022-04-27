@@ -25,5 +25,7 @@ Future<String> login(String username, String password) async
   }
 }
 
-
-
+Future<String> changePassword(String password)
+{
+  throw Error();
+}
