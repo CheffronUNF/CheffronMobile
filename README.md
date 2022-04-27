@@ -17,8 +17,6 @@ This app is being made as a project for our Software Engineering class. We hope 
 
 The discovery page lets you find recipes that fit your diet or how you feel that day. Don't want to go out and get ingredients? Enter the ingredients you have into your in-app "pantry" to get recipes you can make with what you have!
 
-## Design
-Figma: https://www.figma.com/file/5ErNILNtN8BQ8kmxAH9xaE/Recipe-App?node-id=0%3A1
 
 ## Technical Features (IN DEVELOPMENT)
 - User Profiles
