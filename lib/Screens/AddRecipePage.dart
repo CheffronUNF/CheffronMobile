@@ -1,3 +1,4 @@
+import 'package:cheffron_mobile/Screens/HomePage.dart';
 import 'package:cheffron_mobile/Style.dart';
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/cupertino.dart';
@@ -263,7 +264,7 @@ class _AddRecipeState extends State<AddRecipe>{
           SizedBox(
             height: screenHeight * 0.03,
           ),
-
+          /*
           FloatingActionButton.extended(
             backgroundColor: yellow,
             //child: const Icon(Icons.add, size: 50,),
@@ -273,9 +274,48 @@ class _AddRecipeState extends State<AddRecipe>{
             
           ),
 
+           */
+
+        ],
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: [
+          Positioned(
+              width: screenWidth * 0.4,
+              right: 30,
+              bottom: 15,
+              child: FloatingActionButton(
+                  backgroundColor: yellow,
+                  child: const Text('Save Recipe', style: TextStyle(fontSize: 18),),
+                  onPressed: (){
+                    //TODO: add recipe to database
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
+              )
+          ),
+
+          Positioned(
+              width: screenWidth * 0.4,
+              left: 30,
+              bottom: 15,
+              child: FloatingActionButton(
+                backgroundColor: yellow,
+                child: const Text('Add Ingredient', style: TextStyle(fontSize: 18),),
+                onPressed: showUserDialog,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
+              )
+          )
+
         ],
       ),
     );
-
   }
 }
