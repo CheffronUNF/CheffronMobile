@@ -1,10 +1,13 @@
 import 'package:cheffron_mobile/Screens/AddRecipePage.dart';
 import 'package:cheffron_mobile/Screens/PantryPage.dart';
 import 'package:cheffron_mobile/Screens/RecipePage.dart';
+import 'package:cheffron_mobile/Service/RecipeService.dart';
 import 'package:cheffron_mobile/Style.dart';
 import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../Model/Recipe.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -29,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             centerTitle: true,
             snap: false,
             actionsIconTheme: const IconThemeData(opacity: 0.0),
-            title: const Text('Your Recipes', style: TextStyle( color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),),
+            title: const Text('Your Recipes', style: TextStyle( color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold)),
             backgroundColor: Colors.white,
             bottom: AppBar(
               shadowColor: Colors.white,
@@ -45,15 +48,15 @@ class _HomePageState extends State<HomePage> {
                     controller: recipeSearchString,
                     textAlignVertical: TextAlignVertical.bottom,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-                            borderRadius: BorderRadius.circular(25.0)
-                        ),
-                        hintText: 'Search',
-                        hintStyle: const TextStyle(fontSize: 18, color: Color(0xFFBDBDBD)),
-                        prefixIcon: const Icon(Icons.search),
-                        filled: true,
-                        fillColor: const Color(0xFFF6F6F6)
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(width: 0, style: BorderStyle.none),
+                        borderRadius: BorderRadius.circular(25.0)
+                      ),
+                      hintText: 'Search',
+                      hintStyle: const TextStyle(fontSize: 18, color: Color(0xFFBDBDBD)),
+                      prefixIcon: const Icon(Icons.search),
+                      filled: true,
+                      fillColor: const Color(0xFFF6F6F6)
                     ),
                   ),
                 ),
@@ -61,31 +64,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SliverFixedExtentList(
-              itemExtent: 100,
-              delegate: SliverChildBuilderDelegate(
-                      (context, index){
-                    return Card(
-                      margin: const EdgeInsets.all(10),
-                      child: InkWell(
-                        child: Container(
-                          color: Colors.white,
-                          height: 90,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Recipe $index'
-                        ),
-                      ),
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => RecipePage()),
-                          );
-                        },
-                      )
-                    );
-                  },
-                  childCount: 10
-              )
+            itemExtent: 100,
+            delegate: SliverChildBuilderDelegate((context, index) {
+              var recipes = getRecipes();
+
+              return null;
+            })
           )
         ],
       ),
@@ -102,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               child: FloatingActionButton(
                 heroTag: "Add button",
                 backgroundColor: yellow,
-                child: const Icon(Icons.add, size: 50,),
+                child: const Icon(Icons.add, size: 50),
                 onPressed: (){
                   print ('add pressed');
                   Navigator.push(
@@ -120,31 +104,49 @@ class _HomePageState extends State<HomePage> {
               child: FloatingActionButton(
                 heroTag: "Settings button",
                   backgroundColor: yellow,
-                  child: const Icon(Icons.settings, size: 40,),
+                  child: const Icon(Icons.settings, size: 40),
                   onPressed: (){
-                    print ('settings pressed');
+                    print('settings pressed');
                   },
               )
           ),
           Positioned(
             width: 130,
             bottom: 20,
-              child: FloatingActionButton(
-                heroTag: "Pantry buttton",
-                  backgroundColor: yellow,
-                  child: const Text('PANTRY', style: TextStyle(fontSize: 18),),
-                  onPressed: (){
-                    print ('pantry pressed');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PantryPage()),
-                    );
-                  },
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-              )
+            child: FloatingActionButton(
+              heroTag: "Pantry buttton",
+              backgroundColor: yellow,
+              child: const Text('PANTRY', style: TextStyle(fontSize: 18)),
+              onPressed: (){
+                print('pantry pressed');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PantryPage()),
+                );
+              },
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
+            )
           )
         ],
       ),
     );
   }
 }
+
+_createRecipeCard(BuildContext context, Recipe recipe) => Card(
+  margin: const EdgeInsets.all(10),
+  child: InkWell(
+    child: Container(
+      color: Colors.white,
+      height: 90,
+      alignment: Alignment.center,
+      child: Text(recipe.recipeName),
+    ),
+    onTap: (){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RecipePage(recipe, null)),
+      );
+    },
+  )
+);

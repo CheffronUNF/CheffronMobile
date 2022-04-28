@@ -1,16 +1,17 @@
 import 'dart:convert';
+import 'package:cheffron_mobile/CheffronConfig.dart';
 import 'package:http/http.dart' as http;
 import '../Model/Pantry.dart';
 import '../main.dart';
 
-var _url = Uri.parse('https://elian.tk:8808/pantry');
+var _url = cheffronURL.resolve("/pantry");
 
-Future<Pantry> getPantry()
+Future<Pantry> getPantry() async
 {
   throw Error();
 }
 
-Future<String> updatePantry(String id, Pantry pantry)
+Future<String> updatePantry(String id, Pantry pantry) async
 {
   throw Error();
 }

@@ -177,7 +177,7 @@ class _AddIngredientDialogState extends State<AddIngredientDialog> {
                 primary: yellow, 
               ),
               onPressed: () {
-                final ingredient = Ingredient(ingredientName.text, int.parse(ingredientQuantity.text), ingredientUnit.text);
+                final ingredient = Ingredient(ingredientName.text, double.parse(ingredientQuantity.text), ingredientUnit.text);
                 widget.addIngredient(ingredient);
                 Navigator.of(context).pop();
               },

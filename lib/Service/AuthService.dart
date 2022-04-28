@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'package:cheffron_mobile/CheffronConfig.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
 
-var _url = Uri.parse('https://elian.tk:8808/auth');
+var _url = cheffronURL.resolve("/auth");
 
 Future<String> login(String username, String password) async
 {
@@ -14,9 +15,7 @@ Future<String> login(String username, String password) async
   switch (response.statusCode)
   {
     case 200:
-      var body = jsonDecode(response.body);
-      String jwt = body["jwt"];
-      preferences.save("jwt", jwt);
+      preferences.save("jwt", response.headers["jwt"]!);
       return "success";
     case 406:
       return "malformed";
@@ -25,7 +24,7 @@ Future<String> login(String username, String password) async
   }
 }
 
-Future<String> changePassword(String password)
+Future<String> changePassword(String password) async
 {
   throw Error();
 }

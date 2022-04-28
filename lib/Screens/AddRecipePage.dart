@@ -155,35 +155,6 @@ class _AddRecipeState extends State<AddRecipe>{
             ],
           ),
 
-          /*
-          Center(
-            child: Container(
-              height: screenHeight * 0.2,
-              width: screenWidth * 0.85,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Colors.white),
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    minLines: 1,
-                    maxLines: 6,
-                    textAlign: TextAlign.center,
-                    textAlignVertical: TextAlignVertical.center,
-                    controller: ingredients, // Controller for recipe name
-                    decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Ingredients",
-                        contentPadding: EdgeInsets.all(20)),
-                    onEditingComplete: () => FocusScope.of(context).nextFocus(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-           */
-
           SizedBox(
             height: screenHeight * 0.03,
           ),
@@ -264,18 +235,6 @@ class _AddRecipeState extends State<AddRecipe>{
           SizedBox(
             height: screenHeight * 0.03,
           ),
-          /*
-          FloatingActionButton.extended(
-            backgroundColor: yellow,
-            //child: const Icon(Icons.add, size: 50,),
-            onPressed: showUserDialog,
-            heroTag: "Add ingredient",
-            label: const Text("Add Ingredient"),
-            
-          ),
-
-           */
-
         ],
       ),
 

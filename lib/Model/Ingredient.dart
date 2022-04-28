@@ -1,6 +1,6 @@
 class Ingredient {
   late String name;
-  late int quantity;
+  late double quantity;
   late String unit;
 
   Ingredient(

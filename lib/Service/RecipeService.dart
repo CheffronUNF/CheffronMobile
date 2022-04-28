@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:cheffron_mobile/CheffronConfig.dart';
 import 'package:http/http.dart' as http;
 import '../Model/Recipe.dart';
 import '../main.dart';
 
-var _url = Uri.parse('https://elian.tk:8808/recipe');
+var _url = cheffronURL.resolve("/recipe");
 
 Future<List<Recipe>> getRecipes() async
 {
