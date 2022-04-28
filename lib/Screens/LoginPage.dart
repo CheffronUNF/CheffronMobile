@@ -1,5 +1,6 @@
 import 'package:cheffron_mobile/Screens/SignUpPage.dart';
 import 'package:cheffron_mobile/Service/AuthService.dart';
+import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cheffron_mobile/Screens/HomePage.dart';
@@ -15,14 +16,24 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   late Widget _loadingPlaceholder;
 
-  _LoginScreenState() {
-    _loadingPlaceholder = const SizedBox(height: 30);
+  @override
+  Widget build(BuildContext context) {
+    var future = preferences.read("jwt");
+    future.then((res) => _tryAutoLogin(res));
+
+    _loadingPlaceholder = const SizedBox();
+    return _buildScaffold();
+  }
+
+  _tryAutoLogin(String? result) {
+    if (result != null) {
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
+    }
   }
 
   _tryLogin() {
@@ -44,10 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
         break;
     }
   }
-
-
-  @override
-  Widget build(BuildContext context) => _buildScaffold();
 
   _buildScaffold() => Scaffold(
     backgroundColor: blue,
@@ -97,15 +104,35 @@ class _LoginScreenState extends State<LoginScreen> {
     ),
   );
 
+  _buildAutoLoginFutureBuilder() => FutureBuilder(
+    future: preferences.read("jwt"),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+
+      }
+
+      return _buildLoadingIndicator();
+    },
+  );
+
+  _buildLoadingIndicator() => Center(
+    child: Column(
+      children: const [
+        SizedBox(height: 100),
+        CircularProgressIndicator()
+      ],
+    )
+  );
+
   _buildLoginButton() => Container(
     width: 570,
     height: 70,
     padding: const EdgeInsets.only(top: 20),
     child: RaisedButton(
-      color: yellow,
-      child: const Text("LOG IN", style: TextStyle(color: Colors.white)),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      onPressed: () => _tryLogin()
+        color: yellow,
+        child: const Text("LOG IN", style: TextStyle(color: Colors.white)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        onPressed: () => _tryLogin()
     ),
   );
 
@@ -113,10 +140,10 @@ class _LoginScreenState extends State<LoginScreen> {
     alignment: Alignment.center,
     padding: const EdgeInsets.all(10),
     child: RaisedButton(
-      color: blue,
-      elevation: 0,
-      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignUpScreen())),
-      child: const Text("Don't have an account? Sign up!", style: TextStyle(color: yellow))
+        color: blue,
+        elevation: 0,
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignUpScreen())),
+        child: const Text("Don't have an account? Sign up!", style: TextStyle(color: yellow))
     ),
   );
 }

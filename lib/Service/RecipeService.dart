@@ -29,7 +29,7 @@ Future<String> createRecipe(Recipe recipe) async
   String jwt;
 
   try {
-    jwt = preferences.read("jwt");
+    jwt = await preferences.read("jwt");
   }
   catch (ex) {
     return "fail";
@@ -65,7 +65,7 @@ Future<String> updateRecipe(String id, Recipe recipe) async
   String jwt;
 
   try {
-    jwt = preferences.read("jwt");
+    jwt = await preferences.read("jwt");
   }
   catch (ex) {
     return "fail";
@@ -88,7 +88,7 @@ Future<String> deleteRecipe(String id) async
   String jwt;
 
   try {
-    jwt = preferences.read("jwt");
+    jwt = await preferences.read("jwt");
   }
   catch (ex) {
     return "fail";

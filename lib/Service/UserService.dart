@@ -37,7 +37,7 @@ Future<String> updateUser(String id, User user) async {
   String jwt;
 
   try {
-    jwt = preferences.read("jwt");
+    jwt = await preferences.read("jwt");
   }
   catch (ex) {
     return "fail";
@@ -59,7 +59,7 @@ Future<String> deleteUser(String id) async {
   String jwt;
 
   try {
-    jwt = preferences.read("jwt");
+    jwt = await preferences.read("jwt");
   }
   catch (ex) {
     return "fail";
