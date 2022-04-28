@@ -7,9 +7,9 @@ Cheffron Meals Mobile Meals App (Software Engineering Project) (IN DEVELOPMENT)
 - David Custodio (Front End Developer, UI Designer, UX Designer)
 - Afsara Chowdury (Project Manager, Front End Developer)
 - Stephanie El-Bahri (API Integration Specialist, Compatability Tester)
-- Hailey Francis (Database Designer)
+- Hailey Francis (Database Designer, Quality Assurance Specialist)
 - Elian Khalaf (Backend Developer, Database Engineer, Database Administrator)
-- Chase Wesley (Backend Developer)
+- Chase Wesley (Backend Developer, Documentation Specialist, API Engineer)
 
 ## About Cheffron Mobile
 
@@ -17,8 +17,6 @@ This app is being made as a project for our Software Engineering class. We hope 
 
 The discovery page lets you find recipes that fit your diet or how you feel that day. Don't want to go out and get ingredients? Enter the ingredients you have into your in-app "pantry" to get recipes you can make with what you have!
 
-## Design
-Figma: https://www.figma.com/file/5ErNILNtN8BQ8kmxAH9xaE/Recipe-App?node-id=0%3A1
 
 ## Technical Features (IN DEVELOPMENT)
 - User Profiles

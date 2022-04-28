@@ -21,6 +21,8 @@ class _HomePageState extends State<HomePage> {
   TextEditingController recipeSearchString = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -39,8 +41,9 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.white,
               elevation: 0,
               title: Container(
+                alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 15),
-                width: 530,
+                width: screenWidth * 0.6,
                 height: 55,
                 color: Colors.white,
                 child: Center(
