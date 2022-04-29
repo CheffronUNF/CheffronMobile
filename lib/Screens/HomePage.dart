@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
       heroTag: "Add button",
       backgroundColor: yellow,
       child: const Icon(Icons.add, size: 50),
-      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddRecipe()))
+      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddRecipePage()))
     )
   );
 

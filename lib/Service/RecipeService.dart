@@ -36,7 +36,9 @@ Future<String> createRecipe(Recipe recipe) async
   }
 
   var headers = {"jwt":jwt};
-  final response = await http.post(_url, headers: headers, body: recipe.toJson());
+  var body = jsonEncode(recipe.toJson());
+  print(body);
+  final response = await http.post(_url, headers: headers, body: body);
 
   switch (response.statusCode)
   {

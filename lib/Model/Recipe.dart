@@ -9,18 +9,19 @@ class Recipe
   late List<Ingredient> ingredients;
   late String time;
   late int servings;
-  bool? glutenFree;
-  bool? spicy;
-  bool? isPrivate;
+  bool glutenFree;
+  bool spicy;
+  bool isPrivate;
 
   Recipe(
     this.recipeName,
     this.directions,
     this.ingredients,
     this.servings,
-    this.time,
+    this.time ,
     this.glutenFree,
-    this.spicy
+    this.spicy,
+    this.isPrivate,
   );
 
   Recipe.fromJson(Map<String, dynamic> json):
