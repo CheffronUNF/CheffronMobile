@@ -63,7 +63,8 @@ class _HomePageState extends State<HomePage> {
   _buildScrollView(List<Recipe> recipes) => CustomScrollView(
     slivers: [
       _buildAppBar(),
-      _buildRecipeList(recipes)
+      _buildRecipeList(recipes),
+      _buildSpacerSliver()
     ],
   );
 
@@ -174,6 +175,11 @@ class _HomePageState extends State<HomePage> {
       ),
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RecipePage(recipe, null))),
     )
+  );
+
+  _buildSpacerSliver() => const SliverAppBar(
+    backgroundColor: Colors.white,
+    toolbarHeight: 100,
   );
 }
 
