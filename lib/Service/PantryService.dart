@@ -6,9 +6,27 @@ import '../main.dart';
 
 var _url = cheffronURL.resolve("/pantry");
 
-Future<Pantry> getPantry() async
+Future<Pantry?> getPantry() async
 {
-  throw Error();
+  String jwt;
+
+  try {
+    jwt = await preferences.read("jwt");
+  }
+  catch (ex) {
+    return null;
+  }
+
+  var headers = {"jwt":jwt};
+  final response = await http.get(_url, headers: headers);
+
+  switch (response.statusCode)
+  {
+    case 200:
+      return Pantry.fromJson(jsonDecode(response.body));
+    default:
+      return null;
+  }
 }
 
 Future<String> updatePantry(String id, Pantry pantry) async

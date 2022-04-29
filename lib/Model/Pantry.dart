@@ -2,7 +2,6 @@ import 'Ingredient.dart';
 
 class Pantry
 {
-  String? userId;
   late List<Ingredient> ingredients;
 
   Pantry(
@@ -10,11 +9,21 @@ class Pantry
   );
 
   Pantry.fromJson(Map<String, dynamic> json):
-    userId = json['userId'],
-    ingredients = json['ingredients'];
+    ingredients = _parseIngredients(json['ingredients']);
 
   Map<String, dynamic> toJson() => {
-    'userId': userId,
     'ingredients': ingredients
   };
+
+  static List<Ingredient> _parseIngredients(List<dynamic> json) {
+    print(json);
+    List<Ingredient> ingredients = [];
+
+    for (var ingredient in json)
+    {
+      ingredients.add(Ingredient.fromJson(ingredient));
+    }
+
+    return ingredients;
+  }
 }
