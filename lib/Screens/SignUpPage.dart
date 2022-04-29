@@ -1,7 +1,6 @@
 import 'package:cheffron_mobile/Components/TextInput.dart';
 import 'package:cheffron_mobile/Screens/LoginPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:cheffron_mobile/Model/User.dart';
 import 'package:cheffron_mobile/Style.dart';
 
@@ -100,7 +99,7 @@ class SignUpScreenState extends State<SignUpScreen> {
     child: RaisedButton(
       color: blue,
       elevation: 0,
-      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen())),
+      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage())),
       child: const Text("Already have an account? Log In!", style: TextStyle(color: yellow)),
       disabledColor: blue, //only needed because the button does nothing for now
     ),

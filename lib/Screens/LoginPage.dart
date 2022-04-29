@@ -1,48 +1,32 @@
 import 'package:cheffron_mobile/Screens/SignUpPage.dart';
 import 'package:cheffron_mobile/Service/AuthService.dart';
-import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:cheffron_mobile/Screens/HomePage.dart';
 import 'package:cheffron_mobile/Style.dart';
 
 import '../Components/TextInput.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  late Widget _loadingPlaceholder;
+  late final List<Widget> _errorColumnChildren = [];
 
   @override
-  Widget build(BuildContext context) {
-    var future = preferences.read("jwt");
-    future.then((res) => _tryAutoLogin(res));
-
-    _loadingPlaceholder = const SizedBox();
-    return _buildScaffold();
-  }
-
-  _tryAutoLogin(String? result) {
-    if (result != null) {
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
-    }
-  }
+  Widget build(BuildContext context) => _buildScaffold();
 
   _tryLogin() {
-    if (kDebugMode) {
-      //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
-    }
+    _errorColumnChildren.clear();
 
-    _loadingPlaceholder = const CircularProgressIndicator();
-    login(usernameController.text, passwordController.text).then(_tryLoginCallback);
+    var future = login(usernameController.text, passwordController.text);
+    future.then(_tryLoginCallback);
   }
 
   _tryLoginCallback(String result) {
@@ -51,14 +35,19 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
         break;
       case "fail":
-        _loadingPlaceholder = const Text("Incorrect username/password");
+        setState(() => _errorColumnChildren.add(_buildFailedLoginText()));
         break;
     }
   }
 
   _buildScaffold() => Scaffold(
     backgroundColor: blue,
-    body: _buildScrollView(),
+    body: _buildContentContainer(),
+  );
+
+  _buildContentContainer() => Container(
+    padding: const EdgeInsets.all(20),
+    child: _buildContentColumn(),
   );
 
   _buildScrollView() => SingleChildScrollView(
@@ -67,8 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
     child: _buildContentColumn(),
   );
 
-  _buildContentColumn() => Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
+  _buildContentColumn() => Flex(
+    direction: Axis.vertical,
     children: <Widget>[
       const SizedBox(height: 30),
       _buildLogoDisplay(),
@@ -79,12 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
       const SizedBox(height: 30),
       TextInput(hint: "Password", controller: passwordController, obscure: true),
 
-      const SizedBox(height: 50),
-      _loadingPlaceholder,
-
-      const SizedBox(height: 100),
-      _buildLoginButton(),
-      _buildSignUpButton()
+      const SizedBox(height: 20),
+      const Expanded(child: SizedBox()),
+      Column(children: _errorColumnChildren),
+      _buildButtonColumn()
     ],
   );
 
@@ -104,24 +91,16 @@ class _LoginScreenState extends State<LoginScreen> {
     ),
   );
 
-  _buildAutoLoginFutureBuilder() => FutureBuilder(
-    future: preferences.read("jwt"),
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-
-      }
-
-      return _buildLoadingIndicator();
-    },
+  _buildFailedLoginText() => const Text(
+      "Incorrect username or password",
+      style: TextStyle(color: Colors.red, fontSize: 18)
   );
 
-  _buildLoadingIndicator() => Center(
-    child: Column(
-      children: const [
-        SizedBox(height: 100),
-        CircularProgressIndicator()
-      ],
-    )
+  _buildButtonColumn() => Column(
+    children: [
+      _buildLoginButton(),
+      _buildSignUpButton(),
+    ],
   );
 
   _buildLoginButton() => Container(
