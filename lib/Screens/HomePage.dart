@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
     left: 30,
     bottom: 15,
     child: FloatingActionButton(
-      heroTag: "Settings button",
+      heroTag: "SettingsButton",
       backgroundColor: yellow,
       child: const Icon(Icons.settings, size: 40),
       onPressed: () => print("settings pressed"),
@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
     width: 130,
     bottom: 20,
     child: FloatingActionButton(
-      heroTag: "Pantry buttton",
+      heroTag: "PantryButton",
       backgroundColor: yellow,
       child: const Text('PANTRY', style: TextStyle(fontSize: 18)),
       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PantryPage())),

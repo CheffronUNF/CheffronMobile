@@ -189,6 +189,7 @@ class _AddRecipePageState extends State<AddRecipePage>{
     right: 30,
     bottom: 15,
     child: FloatingActionButton(
+      heroTag: "SaveRecipe",
       backgroundColor: yellow,
       child: const Text('Save Recipe', style: TextStyle(fontSize: 18)),
       onPressed: _saveRecipe,
@@ -201,6 +202,7 @@ class _AddRecipePageState extends State<AddRecipePage>{
     left: 30,
     bottom: 15,
     child: FloatingActionButton(
+      heroTag: "AddIngredient",
       backgroundColor: yellow,
       child: const Text('Add Ingredient', style: TextStyle(fontSize: 18)),
       onPressed: _showUserDialog,
