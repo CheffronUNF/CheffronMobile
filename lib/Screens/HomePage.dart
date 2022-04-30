@@ -28,36 +28,39 @@ class _HomePageState extends State<HomePage> {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
 
-    return _buildScaffold();
+    return _buildFutureBuilder();
   }
 
-  _buildScaffold() => Scaffold(
+  _buildFutureBuilder() => FutureBuilder(
+      future: getRecipes(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData)
+        {
+          dynamic recipes = snapshot.data!;
+          return _buildScaffold(recipes);
+        }
+
+        return _buildLoadingView();
+      }
+  );
+
+  _buildLoadingView() => Scaffold(
     backgroundColor: Colors.white,
-    body: _buildFutureBuilder(),
+    body: Center(
+      child: Column(
+        children: const [
+          SizedBox(height: 300),
+          CircularProgressIndicator()
+        ],
+      )
+    ),
+  ) ;
+
+  _buildScaffold(List<Recipe> recipes) => Scaffold(
+    backgroundColor: Colors.white,
+    body: _buildScrollView(recipes),
     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     floatingActionButton: _buildButtonStack(),
-  );
-
-  _buildFutureBuilder() => FutureBuilder(
-    future: getRecipes(),
-    builder: (context, snapshot) {
-      if (snapshot.hasData)
-      {
-        dynamic recipes = snapshot.data!;
-        return _buildScrollView(recipes);
-      }
-
-      return _buildLoadingView();
-    }
-  );
-
-  _buildLoadingView() => Center(
-    child: Column(
-      children: const [
-        SizedBox(height: 300),
-        CircularProgressIndicator()
-      ],
-    )
   );
 
   _buildScrollView(List<Recipe> recipes) => CustomScrollView(

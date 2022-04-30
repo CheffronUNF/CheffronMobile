@@ -1,5 +1,6 @@
 import 'package:cheffron_mobile/Components/TextInput.dart';
 import 'package:cheffron_mobile/Screens/LoginPage.dart';
+import 'package:cheffron_mobile/Service/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:cheffron_mobile/Model/User.dart';
 import 'package:cheffron_mobile/Style.dart';
@@ -87,10 +88,41 @@ class SignUpScreenState extends State<SignUpScreen> {
       child: const Text("Create Account", style: TextStyle(color: Colors.white)),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       onPressed: () {
-        var user = User(firstnameController.text + " " + lastnameController.text, usernameController.text, emailController.text, passwordController.text);
-        throw ErrorDescription("Not Implemented.");
+        var user = User("${firstnameController.text} ${lastnameController.text}", usernameController.text, emailController.text, passwordController.text);
+        _tryCreateAccount(user);
       }
     ),
+  );
+
+  _tryCreateAccount(User user) {
+    createUser(user).then(_tryCreateAccountCallback);
+  }
+
+  _tryCreateAccountCallback(String result) {
+    switch (result) {
+      case "success":
+        Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+        break;
+      default:
+        _showErrorDialog();
+        break;
+    }
+  }
+
+  _showErrorDialog() async => showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => _buildErrorDialog()
+  );
+
+  _buildErrorDialog() => AlertDialog(
+    content: const Text("Failed to create account!"),
+    actions: [
+      TextButton(
+          child: const Text("OK"),
+          onPressed: () => Navigator.of(context).pop()
+      )
+    ],
   );
 
   _buildLogInButton() => Container(

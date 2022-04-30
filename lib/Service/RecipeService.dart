@@ -33,9 +33,7 @@ Future<String> createRecipe(Recipe recipe) async {
   }
 
   var headers = {"jwt":jwt};
-  var body = jsonEncode(recipe.toJson());
-  print(body);
-  final response = await http.post(_url, headers: headers, body: body);
+  final response = await http.post(_url, headers: headers, body: jsonEncode(recipe.toJson()));
 
   switch (response.statusCode)
   {
@@ -68,7 +66,7 @@ Future<String> updateRecipe(String id, Recipe recipe) async {
   }
 
   var headers = {"jwt":jwt};
-  final response = await http.patch(_url.resolve('/id'), headers: headers, body: recipe.toJson());
+  final response = await http.patch(_url.resolve('/id'), headers: headers, body: jsonEncode(recipe.toJson()));
 
   switch (response.statusCode)
   {

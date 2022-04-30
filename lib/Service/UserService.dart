@@ -8,14 +8,16 @@ var _url = cheffronURL.resolve("/user");
 
 //create Account
 Future<String> createUser(User user) async {
-  final response = await http.post(_url, body: user.toJson());
+  final response = await http.post(_url, body: jsonEncode(user.toJson()));
 
   switch (response.statusCode)
   {
-    case 200:
+    case 201:
       return "success";
-    case 406:
+    case 400:
       return "malformed";
+    case 406:
+      return "used";
     default:
       return "fail";
   }
@@ -42,7 +44,7 @@ Future<String> updateUser(String id, User user) async {
   }
 
   var headers = {"jwt":jwt};
-  final response = await http.patch(_url.resolve('/$id'), headers: headers, body: user.toJson());
+  final response = await http.patch(_url.resolve('/$id'), headers: headers, body: jsonEncode(user.toJson()));
 
   switch (response.statusCode)
   {
