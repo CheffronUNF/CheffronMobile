@@ -23,4 +23,14 @@ class SharedPref {
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();
   }
+
+  Future<String?> jwt() async {
+    try {
+      var jwt = await read("jwt");
+      return jwt;
+    }
+    catch (e) {
+      return null;
+    }
+  }
 }

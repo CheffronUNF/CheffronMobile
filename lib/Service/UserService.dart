@@ -34,12 +34,10 @@ Future<User?> getUser(String id) async {
 }
 
 Future<String> updateUser(String id, User user) async {
-  String jwt;
+  var jwt = await preferences.jwt();
 
-  try {
-    jwt = await preferences.read("jwt");
-  }
-  catch (ex) {
+  if (jwt == null)
+  {
     return "fail";
   }
 
@@ -56,12 +54,10 @@ Future<String> updateUser(String id, User user) async {
 }
 
 Future<String> deleteUser(String id) async {
-  String jwt;
+  var jwt = await preferences.jwt();
 
-  try {
-    jwt = await preferences.read("jwt");
-  }
-  catch (ex) {
+  if (jwt == null)
+  {
     return "fail";
   }
 

@@ -24,14 +24,11 @@ Future<List<Recipe>> getRecipes() async
   return recipes;
 }
 
-Future<String> createRecipe(Recipe recipe) async
-{
-  String jwt;
+Future<String> createRecipe(Recipe recipe) async {
+  var jwt = await preferences.jwt();
 
-  try {
-    jwt = await preferences.read("jwt");
-  }
-  catch (ex) {
+  if (jwt == null)
+  {
     return "fail";
   }
 
@@ -62,14 +59,11 @@ Future<Recipe?> getRecipe(String id) async
   }
 }
 
-Future<String> updateRecipe(String id, Recipe recipe) async
-{
-  String jwt;
+Future<String> updateRecipe(String id, Recipe recipe) async {
+  var jwt = await preferences.jwt();
 
-  try {
-    jwt = await preferences.read("jwt");
-  }
-  catch (ex) {
+  if (jwt == null)
+  {
     return "fail";
   }
 
@@ -85,14 +79,11 @@ Future<String> updateRecipe(String id, Recipe recipe) async
   }
 }
 
-Future<String> deleteRecipe(String id) async
-{
-  String jwt;
+Future<String> deleteRecipe(String id) async {
+  var jwt = await preferences.jwt();
 
-  try {
-    jwt = await preferences.read("jwt");
-  }
-  catch (ex) {
+  if (jwt == null)
+  {
     return "fail";
   }
 

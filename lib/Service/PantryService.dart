@@ -6,14 +6,11 @@ import '../main.dart';
 
 var _url = cheffronURL.resolve("/pantry");
 
-Future<Pantry?> getPantry() async
-{
-  String jwt;
+Future<Pantry?> getPantry() async {
+  var jwt = await preferences.jwt();
 
-  try {
-    jwt = await preferences.read("jwt");
-  }
-  catch (ex) {
+  if (jwt == null)
+  {
     return null;
   }
 
