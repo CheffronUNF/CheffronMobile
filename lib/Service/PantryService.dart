@@ -26,7 +26,22 @@ Future<Pantry?> getPantry() async {
   }
 }
 
-Future<String> updatePantry(String id, Pantry pantry) async
-{
-  throw Error();
+Future<String> updatePantry(Pantry pantry) async {
+  var jwt = await preferences.jwt();
+
+  if (jwt == null)
+  {
+    return "fail";
+  }
+
+  var headers = {"jwt":jwt};
+  final response = await http.patch(_url, headers: headers, body: jsonEncode(pantry.toJson()));
+
+  switch (response.statusCode)
+  {
+    case 201:
+      return "success";
+    default:
+      return "fail";
+  }
 }

@@ -37,7 +37,6 @@ class _AddRecipePageState extends State<AddRecipePage>{
   _saveRecipe() {
     var recipe = Recipe(recipeName.text, directions.text, ingredientsList, int.parse(serves.text), time.text, false, false, false);
 
-    print(recipe);
     createRecipe(recipe).then(_saveRecipeCallback);
   }
 

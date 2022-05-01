@@ -1,4 +1,5 @@
 import 'package:cheffron_mobile/Model/Ingredient.dart';
+import 'package:cheffron_mobile/Model/Pantry.dart';
 import 'package:cheffron_mobile/Service/PantryService.dart';
 import 'package:cheffron_mobile/main.dart';
 import 'package:cheffron_mobile/Style.dart';
@@ -127,7 +128,8 @@ class _PantryPageState extends State<PantryPage> {
   void addIngredient(Ingredient ingredientListing) {
     setState(() {
       widget.ingredientsList.add(ingredientListing);
-      sharedPref.save('list', widget.ingredientsList);
+
+      updatePantry(Pantry(widget.ingredientsList));
     });
   }
 }

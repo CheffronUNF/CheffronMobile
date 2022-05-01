@@ -16,7 +16,6 @@ class Pantry
   };
 
   static List<Ingredient> _parseIngredients(List<dynamic> json) {
-    print(json);
     List<Ingredient> ingredients = [];
 
     for (var ingredient in json)
