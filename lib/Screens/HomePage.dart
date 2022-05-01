@@ -11,7 +11,9 @@ import '../Model/Recipe.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  late List<Recipe> recipes;
+
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -21,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   double screenHeight = 0;
   double screenWidth = 0;
 
-  TextEditingController recipeSearchString = TextEditingController();
+  TextEditingController recipeSearch = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +33,19 @@ class _HomePageState extends State<HomePage> {
     return _buildFutureBuilder();
   }
 
+  List<Recipe> filteredRecipes() {
+    return widget.recipes.where((recipe) => recipe.recipeName.contains(recipeSearch.text)).toList();
+  }
+
   _buildFutureBuilder() => FutureBuilder(
       future: getRecipes(),
       builder: (context, snapshot) {
         if (snapshot.hasData)
         {
           dynamic recipes = snapshot.data!;
-          return _buildScaffold(recipes);
+          widget.recipes = recipes;
+
+          return _buildScaffold();
         }
 
         return _buildLoadingView();
@@ -56,17 +64,17 @@ class _HomePageState extends State<HomePage> {
     ),
   );
 
-  _buildScaffold(List<Recipe> recipes) => Scaffold(
+  _buildScaffold() => Scaffold(
     backgroundColor: Colors.white,
-    body: _buildScrollView(recipes),
+    body: _buildScrollView(),
     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     floatingActionButton: _buildButtonStack(),
   );
 
-  _buildScrollView(List<Recipe> recipes) => CustomScrollView(
+  _buildScrollView() => CustomScrollView(
     slivers: [
       _buildAppBar(),
-      _buildRecipeList(recipes),
+      _buildRecipeList(),
       _buildSpacerSliver()
     ],
   );
@@ -92,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         color: Colors.white,
         child: Center(
           child: TextFormField(
-            controller: recipeSearchString,
+            controller: recipeSearch,
             textAlignVertical: TextAlignVertical.bottom,
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -111,11 +119,11 @@ class _HomePageState extends State<HomePage> {
     ),
   );
 
-  _buildRecipeList(List<Recipe> recipes) => SliverFixedExtentList(
+  _buildRecipeList() => SliverFixedExtentList(
     itemExtent: 100,
     delegate: SliverChildBuilderDelegate(
-      (context, index) => _buildRecipeCard(recipes[index]),
-      childCount: recipes.length
+      (context, index) => _buildRecipeCard(filteredRecipes()[index]),
+      childCount: filteredRecipes().length
     )
   );
 
