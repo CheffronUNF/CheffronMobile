@@ -46,7 +46,7 @@ Future<String> createRecipe(Recipe recipe) async {
 
 Future<Recipe?> getRecipe(String id) async
 {
-  final response = await http.get(_url.resolve('/id'));
+  final response = await http.get(_url.resolve('/recipe/$id'));
 
   switch (response.statusCode)
   {
@@ -66,7 +66,7 @@ Future<String> updateRecipe(String id, Recipe recipe) async {
   }
 
   var headers = {"jwt":jwt};
-  final response = await http.patch(_url.resolve('/id'), headers: headers, body: jsonEncode(recipe.toJson()));
+  final response = await http.patch(_url.resolve('/recipe/$id'), headers: headers, body: jsonEncode(recipe.toJson()));
 
   switch (response.statusCode)
   {
@@ -86,8 +86,9 @@ Future<String> deleteRecipe(String id) async {
   }
 
   var headers = {"jwt":jwt};
-  final response = await http.delete(_url.resolve('/id'), headers: headers);
+  final response = await http.delete(_url.resolve('/recipe/$id'), headers: headers);
 
+  print(response.statusCode);
   switch (response.statusCode)
   {
     case 200:

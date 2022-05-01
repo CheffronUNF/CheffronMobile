@@ -1,3 +1,4 @@
+import 'package:cheffron_mobile/JWT.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -32,5 +33,18 @@ class SharedPref {
     catch (e) {
       return null;
     }
+  }
+
+  Future<String?> userId() async {
+    var jwt = await this.jwt();
+
+    if (jwt == null)
+    {
+      return null;
+    }
+
+    var data = parseJwt(jwt);
+
+    return data['sub'];
   }
 }

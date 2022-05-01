@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         ],
       )
     ),
-  ) ;
+  );
 
   _buildScaffold(List<Recipe> recipes) => Scaffold(
     backgroundColor: Colors.white,
@@ -176,7 +176,7 @@ class _HomePageState extends State<HomePage> {
         alignment: Alignment.center,
         child: Text(recipe.recipeName),
       ),
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RecipePage(recipe, null))),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RecipePage(recipe))),
     )
   );
 

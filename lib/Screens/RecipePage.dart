@@ -1,3 +1,8 @@
+import 'package:cheffron_mobile/Screens/HomePage.dart';
+import 'package:cheffron_mobile/Service/RecipeService.dart';
+import 'package:cheffron_mobile/Service/UserService.dart';
+import 'package:cheffron_mobile/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cheffron_mobile/Style.dart';
 
@@ -8,9 +13,9 @@ import '../Model/User.dart';
 
 class RecipePage extends StatefulWidget{
   final Recipe recipe;
-  final User? owner;
+  late User? owner;
 
-  const RecipePage(this.recipe, this.owner, {Key? key}) : super(key: key);
+  RecipePage(this.recipe, {Key? key}) : super(key: key);
 
   @override
   _RecipePageState createState() => _RecipePageState();
@@ -24,7 +29,34 @@ class _RecipePageState extends State<RecipePage> {
 
   _buildScaffold() => Scaffold(
     backgroundColor: Colors.white,
-    body: _buildContentContainer(),
+    body: _buildContentFutureBuilder(),
+  );
+
+  _buildContentFutureBuilder() => FutureBuilder(
+      future: getUser(widget.recipe.userId!),
+      builder: (context, snapshot) {
+        if (snapshot.hasData)
+        {
+          dynamic owner = snapshot.data;
+          widget.owner = owner;
+
+          return _buildContentContainer();
+        }
+
+        return _buildLoadingView();
+      }
+  );
+
+  _buildLoadingView() => Scaffold(
+    backgroundColor: Colors.white,
+    body: Center(
+        child: Column(
+          children: const [
+            SizedBox(height: 300),
+            CircularProgressIndicator()
+          ],
+        )
+    ),
   );
 
   _buildContentContainer() => SizedBox(
@@ -63,8 +95,7 @@ class _RecipePageState extends State<RecipePage> {
   _buildContentColumn() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      _buildRecipeNameHeader(),
-      _buildOwnerHeader(),
+      _buildHeaderRow(),
 
       const SizedBox(height: 28),
       _buildFoodInfoContainer(),
@@ -83,6 +114,21 @@ class _RecipePageState extends State<RecipePage> {
     ],
   );
 
+  _buildHeaderRow() => Row(
+    children: [
+      _buildHeaderColumn(),
+      const Spacer(),
+      _buildTrashFutureBuilder()
+    ],
+  );
+
+  _buildHeaderColumn() => Column(
+    children: [
+      _buildRecipeNameHeader(),
+      _buildOwnerHeader(),
+    ],
+  );
+
   _buildRecipeNameHeader() => Text(
     widget.recipe.recipeName,
     style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -91,6 +137,78 @@ class _RecipePageState extends State<RecipePage> {
   _buildOwnerHeader() => Text(
     "By ${widget.owner != null ? widget.owner!.username : "unknown"}",
     style: const TextStyle(fontWeight: FontWeight.w300),
+  );
+
+  _buildTrashFutureBuilder() => FutureBuilder(
+    future: preferences.userId(),
+    builder: (context, snapshot) {
+      if (snapshot.hasData && snapshot.data == widget.recipe.userId)
+        {
+          return _buildTrashButton();
+        }
+
+      return const SizedBox();
+    },
+  );
+
+  _buildTrashButton() => IconButton(
+    icon: const Icon(CupertinoIcons.trash),
+    color: Colors.grey,
+    onPressed: _showConfirmationDialog
+  );
+
+  _showConfirmationDialog() async => showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => _buildConfirmationDialog()
+  );
+
+  _buildConfirmationDialog() => AlertDialog(
+    content: const Text("Are you sure you want to delete this recipe?"),
+    actions: [
+      TextButton(
+          child: const Text("Yes"),
+          onPressed: () => {
+            Navigator.of(context).pop(),
+            _tryDeleteRecipe()
+          }
+      ),
+      TextButton(
+          child: const Text("No"),
+          onPressed: () => Navigator.of(context).pop()
+      )
+    ],
+  );
+
+  _tryDeleteRecipe() {
+    deleteRecipe(widget.recipe.recipeId!).then(_tryDeleteRecipeCallback);
+  }
+
+  _tryDeleteRecipeCallback(String result) {
+    switch (result) {
+      case "success":
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
+        break;
+      default:
+        _showErrorDialog();
+        break;
+    }
+  }
+
+  _showErrorDialog() async => showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => _buildErrorDialog()
+  );
+
+  _buildErrorDialog() => AlertDialog(
+    content: const Text("Failed to delete recipe!"),
+    actions: [
+      TextButton(
+          child: const Text("OK"),
+          onPressed: () => Navigator.of(context).pop()
+      )
+    ],
   );
 
   _buildFoodInfoContainer() => Container(
