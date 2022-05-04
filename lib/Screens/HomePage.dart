@@ -7,6 +7,7 @@ import 'package:cheffron_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../Model/Ingredient.dart';
 import '../Model/Recipe.dart';
 import 'LoginPage.dart';
 
@@ -35,7 +36,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Recipe> filteredRecipes() {
-    return widget.recipes.where((recipe) => recipe.recipeName.contains(recipeSearch.text)).toList();
+    return widget.recipes.where((recipe) {
+      if(recipe.recipeName.toLowerCase().contains(recipeSearch.text.toLowerCase())) {
+        return true;
+      }
+
+      for (Ingredient ingredient in recipe.ingredients) {
+        if (ingredient.name.toLowerCase().contains(recipeSearch.text.toLowerCase())) {
+          return true;
+        }
+      }
+
+      return false;
+    }).toList();
   }
 
   _buildFutureBuilder() => FutureBuilder(
