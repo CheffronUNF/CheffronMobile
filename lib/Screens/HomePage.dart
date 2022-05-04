@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../Model/Recipe.dart';
+import 'LoginPage.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -158,8 +159,11 @@ class _HomePageState extends State<HomePage> {
     child: FloatingActionButton(
       heroTag: "SettingsButton",
       backgroundColor: yellow,
-      child: const Icon(Icons.settings, size: 40),
-      onPressed: () => print("settings pressed"),
+      child: const Icon(Icons.logout, size: 40),
+      onPressed: () {
+       preferences.remove("jwt");
+       Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+      },
     )
   );
 
